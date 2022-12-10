@@ -8,6 +8,7 @@ endif()
 
 option(BUILD_SHARED_LIBS "Build shared instead of static library" OFF)
 option(BUILD_SAMPLES "Build provided samples" OFF)
+option(MAYHEM "Enable instrumentation for Mayhem and build harness" OFF)
 
 # Fix issues when building with clang 12, next version of clang
 # else we might encounter errors making the library 
@@ -75,3 +76,8 @@ if(CMAKE_PROJECT_NAME STREQUAL PROJECT_NAME AND BUILD_TESTING)
 	add_subdirectory(test)
 endif()
 
+if (MAYHEM)
+	add_compile_options(-fsanitize=fuzzer-no-link,address,undefined)
+	add_link_options(-fsanitize=address,undefined)
+	add_subdirectory(mayhem)
+endif()
