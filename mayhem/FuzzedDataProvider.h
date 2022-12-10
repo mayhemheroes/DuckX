@@ -61,7 +61,7 @@ public:
     std::string ConsumeRandomLengthString(size_t max_length);
     std::string ConsumeRandomLengthString();
     std::string ConsumeRemainingBytesAsString();
-    FuzzFile ConsumeRemainingBytesAsFile();
+    FuzzFile ConsumeFile();
 
     // Methods returning integer values.
     template <typename T> T ConsumeIntegral();
@@ -152,10 +152,10 @@ inline std::string FuzzedDataProvider::ConsumeBytesAsString(size_t num_bytes) {
     return result;
 }
 
-inline FuzzFile FuzzedDataProvider::ConsumeRemainingBytesAsFile() {
+inline FuzzFile FuzzedDataProvider::ConsumeFile() {
     std::string new_file_name = std::tmpnam(nullptr);
     std::FILE* new_file = std::fopen(new_file_name.c_str(), "wb+");
-    std::fputs(ConsumeRemainingBytesAsString().c_str(), new_file);
+    std::fputs(ConsumeRandomLengthString().c_str(), new_file);
     std::rewind(new_file);
     return {new_file_name, new_file};
 }

@@ -8,7 +8,7 @@
 
 extern "C" __attribute__((unused)) int LLVMFuzzerTestOneInput(const uint8_t *fuzz_data, size_t size) {
     FuzzedDataProvider fdp(fuzz_data, size);
-    auto fuzz_file = fdp.ConsumeRemainingBytesAsFile();
+    auto fuzz_file = fdp.ConsumeFile();
     duckx::Document doc(fuzz_file.name);
     doc.open();
 
