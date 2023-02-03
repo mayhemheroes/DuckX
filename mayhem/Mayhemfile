@@ -1,0 +1,8 @@
+project: DuckX
+target: parse-word
+testsuite:
+    - file://mayhem/testsuite
+cmds:
+  - cmd: /fuzz_duckx
+    libfuzzer: true
+    max_length: 4500
